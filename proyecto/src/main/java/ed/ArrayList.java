@@ -1,8 +1,10 @@
 package ed;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class ArrayList<E> implements List<E> {
+public class ArrayList<E> implements List<E>,Iterable<E> {
 
     private E listaElementosGenéricos[] = null; // lista de elementos genéricos
     private int capacidad_máxima = 100; // número que denota la máxima cantidad de elementos en una lista
@@ -282,4 +284,48 @@ public class ArrayList<E> implements List<E> {
             return false;
         return Arrays.equals(listaElementosGenéricos, arrayList.listaElementosGenéricos);
     }
+
+
+    /**
+     * Retorna un iterador para recorrer los elementos de la lista.
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new ArrayListIterator();
+    }
+
+    /**
+     * Clase interna que implementa el iterador para ArrayList.
+     */
+    private class ArrayListIterator implements Iterator<E> {
+        private int currentIndex = 0; // Índice actual del iterador
+
+        /**
+         * Verifica si hay un siguiente elemento en la lista.
+         */
+        @Override
+        public boolean hasNext() {
+            return currentIndex < capacidad_utilizada;
+        }
+
+        /**
+         * Retorna el siguiente elemento de la lista.
+         */
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No hay más elementos en la lista");
+            }
+            return listaElementosGenéricos[currentIndex++];
+        }
+
+        /**
+         * Elimina el elemento actual de la lista (no se implementa en este ejemplo).
+         */
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("El método remove no está implementado en este iterador");
+        }
+    }
+
 }

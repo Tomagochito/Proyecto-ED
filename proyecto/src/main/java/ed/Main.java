@@ -1,5 +1,7 @@
 package ed;
 
+import java.util.Iterator;
+
 public class Main {
     public static void main(String[] args) {
         /*LINEAS
@@ -22,7 +24,15 @@ public class Main {
         System.out.println("------------------------------------------------------------------------------------------------------------------");
 
         /*Pruebas para remove(index) */
-        System.out.println("------------------------------------------------TEST REMOVE(INDEX)------------------------------------------------");
-        test_arraylist.remove(4);
+        System.out.println("------------------------------------------------TEST Iterator------------------------------------------------");
+        // Obtener un iterador de la lista
+        Iterator<String> iterator = test_arraylist.iterator();
+
+        // Usar el iterador para recorrer e imprimir la lista
+        System.out.println("Recorriendo la lista con Iterator:");
+        while (iterator.hasNext()) {
+            String elemento = iterator.next();
+            System.out.println(elemento);
+        }
     }
 }

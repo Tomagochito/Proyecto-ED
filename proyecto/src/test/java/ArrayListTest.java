@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ed.ArrayList;
+import java.util.Iterator;
 
 public class ArrayListTest {
 
@@ -24,7 +25,7 @@ public class ArrayListTest {
         list.add(8, "Domingo");
         list.add(9, "diadeocio3");
     }
-
+    
     @Test
     public void testRemove() {
         System.out.println("----------- TEST REMOVE(INDEX) -----------------");
@@ -208,6 +209,41 @@ public class ArrayListTest {
         assertEquals(11, list.showUsedSize());
     }
 
+    @Test
+    public void testIterator() {
+        Iterator<String> iterator = list.iterator();
 
+        assertTrue(iterator.hasNext());
+        assertEquals("diadeocio1", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Lunes", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Martes", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Miércoles", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("diadeocio2", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Jueves", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Viernes", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Sábado", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("Domingo", iterator.next());
+
+        assertTrue(iterator.hasNext());
+        assertEquals("diadeocio3", iterator.next());
+
+        assertFalse(iterator.hasNext());
+    }
 
 }
