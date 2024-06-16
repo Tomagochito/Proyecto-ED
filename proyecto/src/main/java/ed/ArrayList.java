@@ -285,6 +285,18 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
         return Arrays.equals(listaElementosGenéricos, arrayList.listaElementosGenéricos);
     }
 
+    public void reverse() {
+        int left = 0;
+        int right = capacidad_utilizada - 1;
+    
+        while (left < right) {
+            E temp = listaElementosGenéricos[left];
+            listaElementosGenéricos[left] = listaElementosGenéricos[right];
+            listaElementosGenéricos[right] = temp;
+            left++;
+            right--;
+        }
+    }
 
     /**
      * Retorna un iterador para recorrer los elementos de la lista.
@@ -328,4 +340,6 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
         }
     }
 
+
+    
 }

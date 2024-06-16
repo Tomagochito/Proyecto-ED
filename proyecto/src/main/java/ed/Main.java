@@ -34,5 +34,13 @@ public class Main {
             String elemento = iterator.next();
             System.out.println(elemento);
         }
+        System.out.println("La lista será puesta en reversa");
+        test_arraylist.reverse();
+        iterator = test_arraylist.iterator();
+        System.out.println("Recorriendo la lista reverse con Iterator:");
+        while (iterator.hasNext()) {
+            String elemento = iterator.next();
+            System.out.println(elemento);
+        }
     }
 }

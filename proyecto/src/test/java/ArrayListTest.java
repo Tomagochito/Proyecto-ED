@@ -25,7 +25,7 @@ public class ArrayListTest {
         list.add(8, "Domingo");
         list.add(9, "diadeocio3");
     }
-    
+
     @Test
     public void testRemove() {
         System.out.println("----------- TEST REMOVE(INDEX) -----------------");
@@ -244,6 +244,24 @@ public class ArrayListTest {
         assertEquals("diadeocio3", iterator.next());
 
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testReverse() {
+        list.reverse();
+        ArrayList<String> expectedList = new ArrayList<>();
+        expectedList.add(0, "diadeocio3");
+        expectedList.add(1, "Domingo");
+        expectedList.add(2, "Sábado");
+        expectedList.add(3, "Viernes");
+        expectedList.add(4, "Jueves");
+        expectedList.add(5, "diadeocio2");
+        expectedList.add(6, "Miércoles");
+        expectedList.add(7, "Martes");
+        expectedList.add(8, "Lunes");
+        expectedList.add(9, "diadeocio1");
+
+        assertEquals(expectedList, list);
     }
 
 }
