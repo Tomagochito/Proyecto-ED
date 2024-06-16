@@ -1,5 +1,8 @@
 package ed;
-
+/**
+ * Profesora: Adriana Collaguazo Jaramillo
+ * Estudiante: Bolaños Tomás
+ */
 public interface List<E> {
 
     public boolean addFirst(E e); //Inserta el elemento e al inicio

@@ -1,10 +1,12 @@
 package ed;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-public class ArrayList<E> implements List<E>,Iterable<E> {
+/**
+ * Profesora: Adriana Collaguazo Jaramillo
+ * Estudiante: Bolaños Tomás
+ */
+public class ArrayList<E> implements List<E>, Iterable<E> {
 
     private E listaElementosGenéricos[] = null; // lista de elementos genéricos
     private int capacidad_máxima = 100; // número que denota la máxima cantidad de elementos en una lista
@@ -108,11 +110,11 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
      * Vacía toda la lista
      * Retorna void
      */
-    
+
     @SuppressWarnings("unchecked")
     public void clear() {
         listaElementosGenéricos = (E[]) (new Object[capacidad_máxima]);
-        capacidad_utilizada=0;
+        capacidad_utilizada = 0;
     }
 
     /**
@@ -168,14 +170,14 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
      * Retorna dicho elemento
      */
     public E get(int index) {
-        try{
-        return listaElementosGenéricos[index];
-    } catch (IndexOutOfBoundsException ioobe) {
-        System.out.println(
-                "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
-                        + capacidad_utilizada);
-        return null;
-    }
+        try {
+            return listaElementosGenéricos[index];
+        } catch (IndexOutOfBoundsException ioobe) {
+            System.out.println(
+                    "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
+                            + capacidad_utilizada);
+            return null;
+        }
     }
 
     /**
@@ -183,16 +185,16 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
      * Retorna dicho elemento
      */
     public E set(int index, E element) {
-        try{
-        E elementoanterior = listaElementosGenéricos[index];
-        listaElementosGenéricos[index] = element;
-        return elementoanterior;
-    } catch (IndexOutOfBoundsException ioobe) {
-        System.out.println(
-                "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
-                        + capacidad_utilizada);
-        return null;
-    }
+        try {
+            E elementoanterior = listaElementosGenéricos[index];
+            listaElementosGenéricos[index] = element;
+            return elementoanterior;
+        } catch (IndexOutOfBoundsException ioobe) {
+            System.out.println(
+                    "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
+                            + capacidad_utilizada);
+            return null;
+        }
     }
 
     /**
@@ -267,28 +269,12 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
         return s.toString();
     }
 
-    /**
-     * Método equals
-     * Retorna un booleano
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
 
-        ArrayList<?> arrayList = (ArrayList<?>) o;
-
-        if (capacidad_utilizada != arrayList.capacidad_utilizada)
-            return false;
-        return Arrays.equals(listaElementosGenéricos, arrayList.listaElementosGenéricos);
-    }
 
     public void reverse() {
         int left = 0;
         int right = capacidad_utilizada - 1;
-    
+
         while (left < right) {
             E temp = listaElementosGenéricos[left];
             listaElementosGenéricos[left] = listaElementosGenéricos[right];
@@ -297,6 +283,8 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
             right--;
         }
     }
+
+    
 
     /**
      * Retorna un iterador para recorrer los elementos de la lista.
@@ -340,6 +328,47 @@ public class ArrayList<E> implements List<E>,Iterable<E> {
         }
     }
 
+/**
+ * Compara dos elementos en la lista y devuelve un valor entero que indica su orden relativo.
+ * 
+ * @param element1 El primer elemento a comparar.
+ * @param element2 El segundo elemento a comparar.
+ * @return Un valor negativo si el primer elemento está antes que el segundo, cero si son iguales,
+ *         y un valor positivo si el primer elemento está después del segundo.
+ */
+public int compare(E element1, E element2) {
+    Iterator<E> iterator = iterator();
 
-    
+    int index1 = -1;
+    int index2 = -1;
+    int currentIndex = 0;
+
+    while (iterator.hasNext()) {
+        E currentElement = iterator.next();
+
+        if (currentElement.equals(element1)) {
+            index1 = currentIndex;
+        }
+        if (currentElement.equals(element2)) {
+            index2 = currentIndex;
+        }
+
+        if (index1 != -1 && index2 != -1) {
+            break; 
+        }
+
+        currentIndex++;
+    }
+
+    if (index1 == -1 || index2 == -1) {
+        throw new IllegalArgumentException("Uno o ambos elementos no están en la lista");
+    }
+
+    return Integer.compare(index1, index2);
+}
+
+
+
+
+
 }

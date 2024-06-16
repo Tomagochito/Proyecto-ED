@@ -2,7 +2,10 @@ package ed;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+/**
+ * Profesora: Adriana Collaguazo Jaramillo
+ * Estudiante: Bolaños Tomás
+ */
 public class LinkedList<E> implements List<E>,Iterable<E> {
     private NodeList<E> cabecera;
     private NodeList<E> último;
@@ -166,7 +169,6 @@ public class LinkedList<E> implements List<E>,Iterable<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
             private NodeList<E> cursor = cabecera;
-            private NodeList<E> prev = null;
     
             @Override
             public boolean hasNext() {
@@ -179,7 +181,6 @@ public class LinkedList<E> implements List<E>,Iterable<E> {
                     throw new NoSuchElementException();
                 }
                 E elemento = cursor.getContent();
-                prev = cursor;
                 cursor = cursor.getNext();
                 return elemento;
             }
@@ -187,6 +188,6 @@ public class LinkedList<E> implements List<E>,Iterable<E> {
             public void remove() {
                 throw new UnsupportedOperationException("El método remove no está implementado en este iterador");
             }
-        }; // Cierre del constructor del iterador
+        }; 
     }
 }    

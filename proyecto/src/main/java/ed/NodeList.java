@@ -1,5 +1,8 @@
 package ed;
-
+/**
+ * Profesora: Adriana Collaguazo Jaramillo
+ * Estudiante: Bolaños Tomás
+ */
 public class NodeList<E>{
 
 private E content;

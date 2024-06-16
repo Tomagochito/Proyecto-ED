@@ -46,7 +46,7 @@ public class ArrayListTest {
                 expectedList.add(8, "diadeocio3");
         
                 //Se comparan si son las mismas
-                assertEquals(expectedList, list);
+                assertEquals(expectedList.toString(), list.toString());
     }
 
 
@@ -70,7 +70,7 @@ public class ArrayListTest {
                 expectedList.add(8, "Domingo");
         
                 //Se comparan si son las mismas
-                assertEquals(expectedList, list);
+                assertEquals(expectedList.toString(), list.toString());
     }
 
 
@@ -94,7 +94,7 @@ public class ArrayListTest {
                 expectedList.add(8,"diadeocio3");
         
                 //Se comparan si son las mismas
-                assertEquals(expectedList, list);
+                assertEquals(expectedList.toString(), list.toString());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ArrayListTest {
         expectedList.add(9, "Domingo");
         expectedList.add(10, "diadeocio3");
 
-        assertEquals(expectedList, list);
+        assertEquals(expectedList.toString(), list.toString());
     }
 
     @Test
@@ -138,7 +138,7 @@ public class ArrayListTest {
         expectedList.add(9, "diadeocio3");
         expectedList.add(10, "diadeocio4");
 
-        assertEquals(expectedList, list);
+        assertEquals(expectedList.toString(), list.toString());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ArrayListTest {
         assertEquals(0, list.showUsedSize());
 
         ArrayList<String> expectedList = new ArrayList<>();
-        assertEquals(expectedList, list);
+        assertEquals(expectedList.toString(), list.toString());
     }
 
     @Test
@@ -170,7 +170,7 @@ public class ArrayListTest {
         expectedList.add(8, "Domingo");
         expectedList.add(9, "diadeocio3");
 
-        assertEquals(expectedList, list);
+        assertEquals(expectedList.toString(), list.toString());
     }
 
     @Test
@@ -261,7 +261,22 @@ public class ArrayListTest {
         expectedList.add(8, "Lunes");
         expectedList.add(9, "diadeocio1");
 
-        assertEquals(expectedList, list);
+        assertEquals(expectedList.toString(), list.toString());
+    }
+
+        // Prueba para el método compare()
+    @Test
+    public void testCompare() {
+
+ 
+        // Comparación entre "Lunes" y "Martes"
+        assertEquals(-1, list.compare("Lunes", "Martes"));
+
+        // Comparación entre "Martes" y "Lunes"
+        assertEquals(1, list.compare("Martes", "Lunes"));
+
+        // Comparación entre "Martes" y "Martes"
+        assertEquals(0, list.compare("Martes", "Martes"));
     }
 
 }

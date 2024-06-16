@@ -1,7 +1,10 @@
 package ed;
 
 import java.util.Iterator;
-
+/**
+ * Profesora: Adriana Collaguazo Jaramillo
+ * Estudiante: Bolaños Tomás
+ */
 public class Main {
     public static void main(String[] args) {
         /*LINEAS
