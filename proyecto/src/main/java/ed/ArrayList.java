@@ -1,5 +1,7 @@
 package ed;
 
+import java.util.Arrays;
+
 public class ArrayList<E> implements List<E> {
 
     private E listaElementosGenéricos[] = null; // lista de elementos genéricos
@@ -29,13 +31,12 @@ public class ArrayList<E> implements List<E> {
             addCapacity();
         }
 
-        for (int i = capacidad_máxima - 1; i >= 0; i--) {
-            listaElementosGenéricos[i + 1] = listaElementosGenéricos[i];
+        for (int i = capacidad_utilizada - 1; i >= 0; i--) {
+            listaElementosGenéricos[i + 1] = listaElementosGenéricos[i]; //linea35
         }
 
         listaElementosGenéricos[0] = e;
         updateUsedCapacityPlus();
-        ;
         return true;
 
     }
@@ -67,9 +68,9 @@ public class ArrayList<E> implements List<E> {
             return null;
         }
         E removedElement = listaElementosGenéricos[0];
-        
+
         for (int i = 1; i < capacidad_utilizada; i++) {
-           
+
             listaElementosGenéricos[i - 1] = listaElementosGenéricos[i];
         }
         listaElementosGenéricos[capacidad_utilizada - 1] = null;
@@ -106,6 +107,7 @@ public class ArrayList<E> implements List<E> {
      */
     public void clear() {
         listaElementosGenéricos = (E[]) (new Object[capacidad_máxima]);
+        capacidad_utilizada=0;
     }
 
     /**
@@ -137,44 +139,24 @@ public class ArrayList<E> implements List<E> {
      * Retorna dicho elemento
      */
     public E remove(int index) {
-        if (isEmpty()) {
+        try {
+            if (isEmpty()) {
+                return null;
+            }
+            E removedElement = listaElementosGenéricos[index];
+            for (int i = index; i < capacidad_utilizada - 1; i++) {
+                listaElementosGenéricos[i] = listaElementosGenéricos[i + 1];
+            }
+            listaElementosGenéricos[capacidad_utilizada - 1] = null;
+            updateUsedCapacityMinus();
+            return removedElement;
+        } catch (IndexOutOfBoundsException ioobe) {
+            System.out.println(
+                    "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
+                            + capacidad_utilizada);
             return null;
         }
-        E removedElement = listaElementosGenéricos[index];
-        System.out.println("El elemento que se removerà es: "+removedElement);
-        /*
-         * list = ["lunes","martes","miercoles","diadeocio","jueves","viernes","sabado","domingo"]
-         * remove(3)
-         * i=3; 3<7
-         * lista[3] = "diadeocio" = lista[4]="jueves"
-         * i=4; 4<7
-         * lista[4]="jueves" = lista[5]="viernes"
-         * i=5; 5<7
-         * lista[5]="viernes" = lista[6]="sabado"
-         * i=6; 6<7
-         * lista[6]="sabado" = lista[7]="domingo"
-         * 
-         */
-
-        for (int i = index; i < capacidad_utilizada-1; i++) {
-
-            System.out.println("iterador: "+i+";   "+i+" < "+capacidad_utilizada);
-            System.out.println("El elemento que estaba en lista["+ i +"] es: "+listaElementosGenéricos[i]+" ;   ahora será el que está en lista["+i+"+1] que es:"+listaElementosGenéricos[i+1
-            ]);
-            listaElementosGenéricos[i] = listaElementosGenéricos[i+1];
-            System.out.println("La lista es:  "+toString());
-
-        }
-        System.out.println("El for ha finalizado, pero la lista aun contiene "+ capacidad_utilizada + " elementos" );
-        toString();
-        listaElementosGenéricos[capacidad_utilizada - 1] = null;
-        System.out.println("El elemento que estaba al final de la lista ya no existe: "+listaElementosGenéricos[capacidad_utilizada-1]);
-        updateUsedCapacityMinus();
-        System.out.println("la capacidad ultilizada de la lista ahora es");
-        showUsedSize();
-        return removedElement;
-    } 
-
+    }
 
     /**
      * Obtiene un elemento de la lISta dada una posición
@@ -182,7 +164,7 @@ public class ArrayList<E> implements List<E> {
      */
     public E get(int index) {
         return listaElementosGenéricos[index];
-    } 
+    }
 
     /**
      * Coloca un elemento en cierta posición de la lista
@@ -192,7 +174,7 @@ public class ArrayList<E> implements List<E> {
         E elementoanterior = listaElementosGenéricos[index];
         listaElementosGenéricos[index] = element;
         return elementoanterior;
-    } 
+    }
 
     /**
      * Evalúa si la lista está llena
@@ -208,8 +190,8 @@ public class ArrayList<E> implements List<E> {
      */
     public void addCapacity() {
         E[] tmp = (E[]) new Object[capacidad_máxima * 2];
-        System.out.println(capacidad_máxima*2);
-        for (int i = 0; i < capacidad_máxima; i++){
+        System.out.println(capacidad_máxima * 2);
+        for (int i = 0; i < capacidad_máxima; i++) {
             tmp[i] = listaElementosGenéricos[i];
         }
         listaElementosGenéricos = tmp;
@@ -237,18 +219,17 @@ public class ArrayList<E> implements List<E> {
      * Imprime la capacidad máxima de la lista
      * Retorna void
      */
-    public void showMaxSize() {
-        System.out.println(capacidad_máxima);
+    public int showMaxSize() {
+        return capacidad_máxima;
     }
 
     /**
      * Imprime la capacidad usada de la lista
      * Retorna void
      */
-    public void showUsedSize() {
-        System.out.println(capacidad_utilizada);
+    public int showUsedSize() {
+        return capacidad_utilizada;
     }
-
 
     /**
      * Método tostring que imprime los elementos de la lista
@@ -265,5 +246,22 @@ public class ArrayList<E> implements List<E> {
         }
         return s.toString();
     }
-    
+
+    /**
+     * Método equals
+     * Retorna un booleano
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        ArrayList<?> arrayList = (ArrayList<?>) o;
+
+        if (capacidad_utilizada != arrayList.capacidad_utilizada)
+            return false;
+        return Arrays.equals(listaElementosGenéricos, arrayList.listaElementosGenéricos);
+    }
 }

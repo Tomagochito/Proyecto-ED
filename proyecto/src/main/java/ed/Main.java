@@ -17,8 +17,8 @@ public class Main {
         test_arraylist.add(8, "Domingo");
         test_arraylist.add(9, "diadeocio");
         System.out.println("------------------------------------------------LISTA QUE SE USARÁ------------------------------------------------\n");
-        System.out.println(test_arraylist.toString());
-
+        
+        System.out.println(test_arraylist.toString()+"\n");
         System.out.println("------------------------------------------------------------------------------------------------------------------");
 
         /*Pruebas para remove(index) */
