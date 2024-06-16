@@ -42,5 +42,42 @@ public class Main {
             String elemento = iterator.next();
             System.out.println(elemento);
         }
+
+
+        LinkedList<String> testLinkedList = new LinkedList<>();
+        testLinkedList.addLast("diadeocio");
+        testLinkedList.addLast("Lunes");
+        testLinkedList.addLast("Martes");
+        testLinkedList.addLast("Miércoles");
+        testLinkedList.addLast("diadeocio");
+        testLinkedList.addLast("Jueves");
+        testLinkedList.addLast("Viernes");
+        testLinkedList.addLast("Sábado");
+        testLinkedList.addLast("Domingo");
+        testLinkedList.addLast("diadeocio");
+
+        System.out.println("------------------------------------------------LISTA QUE SE USARÁ------------------------------------------------\n");
+        System.out.println(testLinkedList.toString() + "\n");
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
+
+        System.out.println("------------------------------------------------TEST Iterator------------------------------------------------");
+        Iterator<String> iteratorl = testLinkedList.iterator();
+
+        System.out.println("Recorriendo la LinkedList lista con Iterator:");
+        while (iteratorl.hasNext()) {
+            String elemento = iteratorl.next();
+            System.out.println(elemento);
+        }
+
+        System.out.println("La lista será puesta en reversa");
+        testLinkedList.reverse();
+        iteratorl = testLinkedList.iterator();
+        System.out.println("Recorriendo la lista reverse con Iterator:");
+        while (iteratorl.hasNext()) {
+            String elemento = iteratorl.next();
+            System.out.println(elemento);
+        }
     }
+
+    
 }
