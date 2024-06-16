@@ -16,11 +16,11 @@ public interface List<E> {
             
     public boolean add(int index, E element) throws IndexOutOfBoundsException; //Inserta el elemento en la posicion index
             
-    public E remove(int index); // remueve y retorna el elemento en la posicion index
+    public E remove(int index) throws IndexOutOfBoundsException;  // remueve y retorna el elemento en la posicion index
     
-    public E get(int index); //retorna el elemento ubicado en la posicion index
+    public E get(int index) throws IndexOutOfBoundsException; //retorna el elemento ubicado en la posicion index
     
-    public E set(int index, E element); //setea elemento en la posicion index
+    public E set(int index, E element) throws IndexOutOfBoundsException; //setea elemento en la posicion index
 
     public boolean isFull();
 }

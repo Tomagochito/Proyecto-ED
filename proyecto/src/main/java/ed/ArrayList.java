@@ -11,6 +11,7 @@ public class ArrayList<E> implements List<E> {
     /**
      * Constructor crea una lista de genéricos con una capacidad usada de cero
      */
+    @SuppressWarnings("unchecked")
     public ArrayList() {
         listaElementosGenéricos = (E[]) (new Object[capacidad_máxima]); // casting permitido con el arrayList
         capacidad_utilizada = 0;
@@ -32,7 +33,7 @@ public class ArrayList<E> implements List<E> {
         }
 
         for (int i = capacidad_utilizada - 1; i >= 0; i--) {
-            listaElementosGenéricos[i + 1] = listaElementosGenéricos[i]; //linea35
+            listaElementosGenéricos[i + 1] = listaElementosGenéricos[i];
         }
 
         listaElementosGenéricos[0] = e;
@@ -105,6 +106,8 @@ public class ArrayList<E> implements List<E> {
      * Vacía toda la lista
      * Retorna void
      */
+    
+    @SuppressWarnings("unchecked")
     public void clear() {
         listaElementosGenéricos = (E[]) (new Object[capacidad_máxima]);
         capacidad_utilizada=0;
@@ -163,7 +166,14 @@ public class ArrayList<E> implements List<E> {
      * Retorna dicho elemento
      */
     public E get(int index) {
+        try{
         return listaElementosGenéricos[index];
+    } catch (IndexOutOfBoundsException ioobe) {
+        System.out.println(
+                "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
+                        + capacidad_utilizada);
+        return null;
+    }
     }
 
     /**
@@ -171,9 +181,16 @@ public class ArrayList<E> implements List<E> {
      * Retorna dicho elemento
      */
     public E set(int index, E element) {
+        try{
         E elementoanterior = listaElementosGenéricos[index];
         listaElementosGenéricos[index] = element;
         return elementoanterior;
+    } catch (IndexOutOfBoundsException ioobe) {
+        System.out.println(
+                "El índice: " + index + " que se intentó remover de la lista sobrepasa su capacidad de "
+                        + capacidad_utilizada);
+        return null;
+    }
     }
 
     /**
@@ -188,6 +205,7 @@ public class ArrayList<E> implements List<E> {
      * Añade más capacidad a la lista, al doble
      * Retorna void
      */
+    @SuppressWarnings("unchecked")
     public void addCapacity() {
         E[] tmp = (E[]) new Object[capacidad_máxima * 2];
         System.out.println(capacidad_máxima * 2);
