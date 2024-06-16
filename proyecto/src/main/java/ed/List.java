@@ -10,8 +10,6 @@ public interface List<E> {
     
     public E removeLast(); // remueve el elemento al final de la lista
     
-    public int size();
-    
     public boolean isEmpty();
     
     public void clear();
