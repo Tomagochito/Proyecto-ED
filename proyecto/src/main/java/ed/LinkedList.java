@@ -1,7 +1,10 @@
 package ed;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import org.w3c.dom.Node;
 /**
  * Profesora: Adriana Collaguazo Jaramillo
  * Estudiante: Bolaños Tomás
@@ -103,6 +106,9 @@ public class LinkedList<E> implements List<E>,Iterable<E> {
 
     @Override
     public String toString() {
+        if (isEmpty()) {
+            return "[]";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         NodeList<E> actual = cabecera;
@@ -165,29 +171,69 @@ public class LinkedList<E> implements List<E>,Iterable<E> {
 
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private NodeList<E> cursor = cabecera;
-    
-            @Override
-            public boolean hasNext() {
-                return cursor != null;
-            }
-    
-            @Override
-            public E next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                E elemento = cursor.getContent();
-                cursor = cursor.getNext();
-                return elemento;
-            }
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException("El método remove no está implementado en este iterador");
-            }
-        }; 
+    public int compare(E e1, E e2) {
+        if (e1 instanceof String && e2 instanceof String) {
+            String s1 = (String) e1;
+            String s2 = (String) e2;
+            return s1.compareTo(s2);
+        } else if (e1 instanceof Integer && e2 instanceof Integer) {
+            Integer i1 = (Integer) e1;
+            Integer i2 = (Integer) e2;
+            return i1.compareTo(i2);
+        } else {
+            return 0; // Si los tipos no son compatibles, se consideran iguales
+        }
     }
+
+public E find(Comparator<E> comp, E elemento) {
+    Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+    while (iterator.hasNext()) {
+        E item = iterator.next();
+        if (comp.compare(item, elemento) == 0) {
+            return item;
+        }
+    }
+    return null;
+}
+
+public LinkedList<E> findAll(Comparator<E> comp, E elemento) {
+    LinkedList<E> result = new LinkedList<>();
+    Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+    while (iterator.hasNext()) {
+        E item = iterator.next();
+        if (comp.compare(item, elemento) == 0) {
+            result.addLast(item);
+        }
+    }
+    if(result.isEmpty()){
+        return null;
+    }else{
+        return result;
+    }
+
+}
+
+
+@Override
+public Iterator<E> iterator() {
+    return new Iterator<E>() {
+        private NodeList<E> current = cabecera;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            E element = current.getContent();
+            current = current.getNext();
+            return element;
+        }
+    };
+}
+
 }    

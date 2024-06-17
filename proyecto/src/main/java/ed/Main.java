@@ -1,5 +1,6 @@
 package ed;
 
+import java.util.Comparator;
 import java.util.Iterator;
 /**
  * Profesora: Adriana Collaguazo Jaramillo
@@ -7,9 +8,73 @@ import java.util.Iterator;
  */
 public class Main {
     public static void main(String[] args) {
+
+        // Crear instancias de cada tipo de lista
+    LinkedList<Integer> linkedList = new LinkedList<>();
+    // Agregar elementos a las listas
+
+
+    linkedList.addLast(10);
+    linkedList.addLast(20);
+    linkedList.addLast(30);
+    linkedList.addLast(40);
+    linkedList.addLast(50);
+    linkedList.addLast(20);
+    linkedList.addLast(20);
+    linkedList.addLast(20);
+
+
+System.out.println("------------------------------------------------Lista a usar------------------------------------------------");
+System.out.println(linkedList.toString());
+System.out.println("------------------------------------------------------------------------------------------------------------");
+
+    Comparator<Integer> comp = Comparator.naturalOrder();
+    Integer findResult;
+
+    System.out.println("------------------------------------------------Método find-------------------------------------------------");
+    findResult = linkedList.find(comp, 20);
+    System.out.println("Resultado de find(20) en LinkedList: " + findResult);
+    findResult = linkedList.find(comp, 70);
+    System.out.println("Resultado de find(70) en LinkedList: " + findResult);
+    System.out.println("------------------------------------------------------------------------------------------------------------");
+
+    System.out.println("------------------------------------------------Método findAll----------------------------------------------");
+    LinkedList<Integer> findAllResultLinkedList = linkedList.findAll(comp, 20);
+    System.out.println("Resultado de findAll(20) en LinkedList: " + findAllResultLinkedList.toString());
+    LinkedList<Integer> findAllResultLinkedList2 = linkedList.findAll(comp, 80);
+    System.out.println("Resultado de findAll(80) en LinkedList sin toString(): " + findAllResultLinkedList2);
+    System.out.println("Resultado de findAll(80) en LinkedList con toString(): " );
+    try{
+     System.out.println(findAllResultLinkedList2.toString());
+    }catch(NullPointerException npe){System.out.println("Se capturó un nullpointerexception, pues no se puede usa null.toString()");}
+
+
+    System.out.println("----------------------------------------------Recorrido con Iterator----------------------------------------");
+    Iterator<Integer> iterator = linkedList.iterator();
+    while (iterator.hasNext()) {
+         Integer element = iterator.next();
+         System.out.println("Elemento: " + element);
+    }
+    System.out.println("------------------------------------------------------------------------------------------------------------");
+
+    Comparator<Integer> comp2 = Comparator.naturalOrder();
+    System.out.println("-----------------------------------Recorrido con Iterator y uso de compare----------------------------------");
+    Iterator<Integer> iterator2 = linkedList.iterator();
+    Integer compareInteger = 20;
+    System.out.println("Cero si son los mismos \nNegativo si el primero es menor que el segundo\nPositivo si el segundo es menor que el primero");
+    while (iterator2.hasNext()) {
+         Integer element = iterator2.next();
+         System.out.println("Elemento: " + element + ", compare(element, 20) = " + comp2.compare(element, compareInteger));
+        }
+    System.out.println("------------------------------------------------------------------------------------------------------------");
+
+
+
+
         /*LINEAS
          * ------------------------------------------------
          */
+        /* 
         ArrayList<String> test_arraylist = new ArrayList<>();
         test_arraylist.add(0, "diadeocio");
         test_arraylist.add(1, "Lunes");
@@ -26,7 +91,6 @@ public class Main {
         System.out.println(test_arraylist.toString()+"\n");
         System.out.println("------------------------------------------------------------------------------------------------------------------");
 
-        /*Pruebas para remove(index) */
         System.out.println("------------------------------------------------TEST Iterator------------------------------------------------");
         // Obtener un iterador de la lista
         Iterator<String> iterator = test_arraylist.iterator();
@@ -80,6 +144,7 @@ public class Main {
             String elemento = iteratorl.next();
             System.out.println(elemento);
         }
+            */
     }
 
     

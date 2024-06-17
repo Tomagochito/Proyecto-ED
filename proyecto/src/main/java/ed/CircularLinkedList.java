@@ -1,5 +1,6 @@
 package ed;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -84,8 +85,7 @@ public E removeFirst() {
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        return último == null;   }
 
     @Override
     public void clear() {
@@ -114,6 +114,9 @@ public E removeFirst() {
    
     @Override
 public String toString() {
+    if (isEmpty()) {
+        return "[]";
+    }
     StringBuilder sb = new StringBuilder();
     CircularNodeList<E> current = último;
     
@@ -137,14 +140,29 @@ public String toString() {
         throw new UnsupportedOperationException("Unimplemented method 'isFull'");
     }
 
-    @Override
+    public int compare(E e1, E e2) {
+        if (e1 instanceof String && e2 instanceof String) {
+            String s1 = (String) e1;
+            String s2 = (String) e2;
+            return s1.compareTo(s2);
+        } else if (e1 instanceof Integer && e2 instanceof Integer) {
+            Integer i1 = (Integer) e1;
+            Integer i2 = (Integer) e2;
+            return i1.compareTo(i2);
+        } else {
+            return 0; // Si los tipos no son compatibles, se consideran iguales
+        }
+    }
+
+        @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private CircularNodeList<E> current = último.getNext();
+            private CircularNodeList<E> current = (último != null) ? último.getNext() : null;
+            private boolean isFirst = true;
 
             @Override
             public boolean hasNext() {
-                return current != null;
+                return current != null && (isFirst || current != último.getNext());
             }
 
             @Override
@@ -154,10 +172,47 @@ public String toString() {
                 }
                 E element = current.getContent();
                 current = current.getNext();
+                isFirst = false;
                 return element;
             }
         };
     }
+
+    public E find(Comparator<E> comp, E elemento) {
+        if (último == null) {
+            return null;
+        }
+    
+        Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+        while (iterator.hasNext()) {
+            E item = iterator.next();
+            if (comp.compare(item, elemento) == 0) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
+    public CircularLinkedList<E> findAll(Comparator<E> comp, E elemento) {
+        CircularLinkedList<E> result = new CircularLinkedList<>();
+    
+        if (último == null) {
+            return result;
+        }
+    
+        Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+        while (iterator.hasNext()) {
+            E item = iterator.next();
+            if (comp.compare(item, elemento) == 0) {
+                result.addLast(item);
+            }
+        }
+        if(result.isEmpty()){
+            return null;
+        }else{
+            return result;
+        }    }
+    
     
 
     

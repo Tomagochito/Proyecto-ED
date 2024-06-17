@@ -1,5 +1,6 @@
 package ed;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
@@ -259,6 +260,9 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
      */
     @Override
     public String toString() {
+        if (isEmpty()) {
+            return "[]";
+        }
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < capacidad_utilizada; i++) {
             s.append(listaElementosGenéricos[i]);
@@ -286,87 +290,68 @@ public class ArrayList<E> implements List<E>, Iterable<E> {
 
     
 
-    /**
-     * Retorna un iterador para recorrer los elementos de la lista.
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new ArrayListIterator();
+    public int compare(E e1, E e2) {
+        if (e1 instanceof String && e2 instanceof String) {
+            String s1 = (String) e1;
+            String s2 = (String) e2;
+            return s1.compareTo(s2);
+        } else if (e1 instanceof Integer && e2 instanceof Integer) {
+            Integer i1 = (Integer) e1;
+            Integer i2 = (Integer) e2;
+            return i1.compareTo(i2);
+        } else {
+            return 0; // Si los tipos no son compatibles, se consideran iguales
+        }
     }
+    
 
-    /**
-     * Clase interna que implementa el iterador para ArrayList.
-     */
-    private class ArrayListIterator implements Iterator<E> {
-        private int currentIndex = 0; // Índice actual del iterador
+    public E find(Comparator<E> comp, E elemento) {
+        Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+        while (iterator.hasNext()) {
+            E item = iterator.next();
+            if (comp.compare(item, elemento) == 0) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
 
-        /**
-         * Verifica si hay un siguiente elemento en la lista.
-         */
+    public ArrayList<E> findAll(Comparator<E> comp, E elemento) {
+        ArrayList<E> result = new ArrayList<>();
+        Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+        while (iterator.hasNext()) {
+            E item = iterator.next();
+            if (comp.compare(item, elemento) == 0) {
+                result.addLast(item);
+            }
+        }
+        if(result.isEmpty()){
+            return null;
+        }else{
+            return result;
+        }    }
+    
+
+@Override
+public Iterator<E> iterator() {
+    return new Iterator<E>() {
+        private int index = 0;
+
         @Override
         public boolean hasNext() {
-            return currentIndex < capacidad_utilizada;
+            return index < showUsedSize();
         }
 
-        /**
-         * Retorna el siguiente elemento de la lista.
-         */
         @Override
         public E next() {
             if (!hasNext()) {
-                throw new NoSuchElementException("No hay más elementos en la lista");
+                throw new NoSuchElementException();
             }
-            return listaElementosGenéricos[currentIndex++];
+            return get(index++);
         }
-
-        /**
-         * Elimina el elemento actual de la lista (no se implementa en este ejemplo).
-         */
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException("El método remove no está implementado en este iterador");
-        }
-    }
-
-/**
- * Compara dos elementos en la lista y devuelve un valor entero que indica su orden relativo.
- * 
- * @param element1 El primer elemento a comparar.
- * @param element2 El segundo elemento a comparar.
- * @return Un valor negativo si el primer elemento está antes que el segundo, cero si son iguales,
- *         y un valor positivo si el primer elemento está después del segundo.
- */
-public int compare(E element1, E element2) {
-    Iterator<E> iterator = iterator();
-
-    int index1 = -1;
-    int index2 = -1;
-    int currentIndex = 0;
-
-    while (iterator.hasNext()) {
-        E currentElement = iterator.next();
-
-        if (currentElement.equals(element1)) {
-            index1 = currentIndex;
-        }
-        if (currentElement.equals(element2)) {
-            index2 = currentIndex;
-        }
-
-        if (index1 != -1 && index2 != -1) {
-            break; 
-        }
-
-        currentIndex++;
-    }
-
-    if (index1 == -1 || index2 == -1) {
-        throw new IllegalArgumentException("Uno o ambos elementos no están en la lista");
-    }
-
-    return Integer.compare(index1, index2);
+    };
 }
-
 
 
 

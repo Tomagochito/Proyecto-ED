@@ -1,7 +1,9 @@
 package ed;
 
 
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 /**
  * Profesora: Adriana Collaguazo Jaramillo
  * Estudiante: Bolaños Tomás
@@ -19,7 +21,7 @@ public class DoublyLinkedList<E> implements List<E>,Iterable<E> {
     }
 
     public boolean isEmpty(){
-        return cabecera == null && último == null;
+        return cabecera == null && último == null ;
     }
     
     public int showSize() {
@@ -149,6 +151,9 @@ public E removeLast() {
 
 @Override
 public String toString() {
+    if (isEmpty()) {
+        return "[]";
+    }
     StringBuilder s = new StringBuilder();
     DoublyNodeList<E> current = cabecera;
     while (current != null) {
@@ -192,22 +197,67 @@ public String toString() {
 
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private DoublyNodeList<E> current = cabecera;
-
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public E next() {
-                E content = current.getContent();
-                current = current.getNext();
-                return content;
-            }
-        };
+    public int compare(E e1, E e2) {
+        if (e1 instanceof String && e2 instanceof String) {
+            String s1 = (String) e1;
+            String s2 = (String) e2;
+            return s1.compareTo(s2);
+        } else if (e1 instanceof Integer && e2 instanceof Integer) {
+            Integer i1 = (Integer) e1;
+            Integer i2 = (Integer) e2;
+            return i1.compareTo(i2);
+        } else {
+            return 0; // Si los tipos no son compatibles, se consideran iguales
+        }
     }
+
+    public E find(Comparator<E> comp, E elemento) {
+        Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+        while (iterator.hasNext()) {
+            E item = iterator.next();
+            if (comp.compare(item, elemento) == 0) {
+                return item;
+            }
+        }
+        return null;
+    }
+    
+    public DoublyLinkedList<E> findAll(Comparator<E> comp, E elemento) {
+        DoublyLinkedList<E> result = new DoublyLinkedList<>();
+        Iterator<E> iterator = iterator(); // Obtener un iterador sobre la lista
+        while (iterator.hasNext()) {
+            E item = iterator.next();
+            if (comp.compare(item, elemento) == 0) {
+                result.addLast(item);
+            }
+        }
+        if(result.isEmpty()){
+            return null;
+        }else{
+            return result;
+        }    }
+    
+
+@Override
+public Iterator<E> iterator() {
+    return new Iterator<E>() {
+        private DoublyNodeList<E> current = cabecera;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            E element = current.getContent();
+            current = current.getNext();
+            return element;
+        }
+    };
+}
+
 }
